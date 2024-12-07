@@ -21,6 +21,10 @@ db.connect()
     console.log("Bir sorun olustu !");
   });
 
+function creationDate() {
+  return new Date().toISOString(); // ISO formatında bir timestamp döner
+}
+
 const app = express();
 const port = 3000;
 
@@ -29,7 +33,9 @@ app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
   try {
-    const response = await db.query("select * from items ORDER BY id ASC");
+    const response = await db.query(
+      "select * from items ORDER BY creation_time ASC"
+    );
     const items = response.rows;
     res.render("index.ejs", {
       listTitle: "Today",
@@ -44,7 +50,11 @@ app.post("/add", async (req, res) => {
   const { newItem } = req.body;
   if (newItem) {
     try {
-      await db.query("INSERT INTO items (title) VALUES ($1)", [newItem]);
+      const timeStamp = creationDate();
+      await db.query(
+        "INSERT INTO items (title, creation_time) VALUES ($1, $2)",
+        [newItem, timeStamp]
+      );
     } catch (error) {
       console.log(error);
     }
@@ -76,5 +86,5 @@ app.post("/delete", async (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+  console.log(`Server running on port http://localhost:${port}`);
 });

@@ -111,3 +111,22 @@ footer {
   color: white;
   text-align: center;
 }
+
+.app {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 20px;
+  margin-top: 80px;
+}
+
+.box-wrapper {
+  backdrop-filter: blur(5px);
+  width: 100%;
+  box-shadow: 2px 2px 4px 4px rgba(0, 0, 0, 0.5);
+  border-radius: 0.3rem;
+}
+
+.item {
+  text-align: left;
+}

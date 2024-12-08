@@ -33,27 +33,42 @@ app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
   try {
-    const response = await db.query(
-      "select * from items ORDER BY creation_time ASC"
+    const today_todo = await db.query(
+      "select * from todos WHERE category = $1 ORDER BY created_at ASC",
+      ["today"]
     );
-    const items = response.rows;
+
+    const week_todo = await db.query(
+      "select * from todos WHERE category = $1 ORDER BY created_at ASC",
+      ["week"]
+    );
+
+    const month_todo = await db.query(
+      "select * from todos WHERE category = $1 ORDER BY created_at ASC",
+      ["month"]
+    );
+
     res.render("index.ejs", {
-      listTitle: "Today",
-      listItems: items,
+      todayList: today_todo.rows,
+      weekList: week_todo.rows,
+      monthList: month_todo.rows,
     });
   } catch (error) {
     console.log(error);
   }
 });
 
-app.post("/add", async (req, res) => {
+app.post("/add/:type", async (req, res) => {
   const { newItem } = req.body;
+  let { type } = req.params;
+  type = type.slice(1);
+
   if (newItem) {
     try {
       const timeStamp = creationDate();
       await db.query(
-        "INSERT INTO items (title, creation_time) VALUES ($1, $2)",
-        [newItem, timeStamp]
+        "INSERT INTO todos (title, category, created_at) VALUES ($1, $2, $3)",
+        [newItem, type, timeStamp]
       );
     } catch (error) {
       console.log(error);
@@ -62,23 +77,30 @@ app.post("/add", async (req, res) => {
   res.redirect("/");
 });
 
-app.post("/edit", async (req, res) => {
+app.post("/edit/:type", async (req, res) => {
   const { updatedItemId, updatedItemTitle } = req.body;
+  let { type } = req.params;
+  type = type.slice(1);
   try {
-    await db.query("UPDATE items SET title = $1 WHERE id = $2", [
-      updatedItemTitle,
-      updatedItemId,
-    ]);
+    await db.query(
+      "UPDATE todos SET title = $1 WHERE category = $2 AND id = $3",
+      [updatedItemTitle, type, updatedItemId]
+    );
     res.redirect("/");
   } catch (error) {
     console.log(error);
   }
 });
 
-app.post("/delete", async (req, res) => {
+app.post("/delete/:type", async (req, res) => {
   const { deleteItemId } = req.body;
+  let { type } = req.params;
+  type = type.slice(1);
   try {
-    await db.query("DELETE FROM items WHERE id=$1", [deleteItemId]);
+    await db.query("DELETE FROM todos WHERE id=$1 AND category = $2", [
+      deleteItemId,
+      type,
+    ]);
     res.redirect("/");
   } catch (error) {
     console.log(error);

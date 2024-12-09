@@ -1,8 +1,11 @@
-<%- include('partials/header.ejs'); -%>
+<%- include('partials/header.ejs', {users: users}); -%>
   <div class="app">
-    <%- include('components/today.ejs', { listItems: todayList, listTitle: 'Today' }) %>
-      <%- include('components/week.ejs', { listItems: weekList, listTitle: 'Week' }) %>
-        <%- include('components/month.ejs', { listItems: monthList, listTitle: 'Month' }) %>
+    <%- include('components/today.ejs', { listItems: todayList, listTitle: 'Today' , currentUserColor: currentUserColor
+      }) %>
+      <%- include('components/week.ejs', { listItems: weekList, listTitle: 'Week' ,currentUserColor: currentUserColor})
+        %>
+        <%- include('components/month.ejs', { listItems: monthList, listTitle: 'Month' ,
+          currentUserColor:currentUserColor}) %>
   </div>
 
   <%- include('partials/footer.ejs'); -%>

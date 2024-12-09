@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Member Of Family</title>
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+
+<body>
+
+    <div class="login">
+        <h2>Welcome Back!</h2>
+        <form action="/login" method="post">
+            <!-- Ask for Username -->
+            <label for="username">Enter Your Username</label>
+            <input type="text" id="username" name="username" placeholder="Your username" required />
+
+            <!-- Select a Color for Main Page -->
+            <p>Select a Theme Color:</p>
+            <div class="color-options">
+                <label>
+                    <input type="radio" name="color" value="#6a4ca3" required />
+                    <span class="color-circle" style="background-color: #6a4ca3;" title="Purple"></span>
+                </label>
+                <label>
+                    <input type="radio" name="color" value="#4caf50" required />
+                    <span class="color-circle" style="background-color: #4caf50;" title="Green"></span>
+                </label>
+                <label>
+                    <input type="radio" name="color" value="#2196f3" required />
+                    <span class="color-circle" style="background-color: #2196f3;" title="Blue"></span>
+                </label>
+                <label>
+                    <input type="radio" name="color" value="#f44336" required />
+                    <span class="color-circle" style="background-color: #f44336;" title="Red"></span>
+                </label>
+                <label>
+                    <input type="radio" name="color" value="#ff9800" required />
+                    <span class="color-circle" style="background-color: #ff9800;" title="Orange"></span>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+
+
+</body>
+
+</html>

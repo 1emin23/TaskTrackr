@@ -6,9 +6,32 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/addNew.css">
+  <link rel="stylesheet" href="styles/header.css">
+
   <title>Permalist</title>
 </head>
 
 <body>
   <main>
- 
+
+    <div class="users">
+      <form action="/addUser" method="post">
+        <!-- User selection buttons -->
+
+        <% for(let user of users){%>
+          <button style=" background-color: <%=user.color %>;" type=" submit" name="user" value="<%=user.id %>">
+            <%= user.username %>
+          </button>
+          <%}%>
+            <!-- Add new family member -->
+            <button type="submit" name="addNew" value="true">Add Family Member</button>
+      </form>
+    </div>
+
+    <script>
+
+      function removeUser(e) {
+        console.log(e)
+      }
+    </script>
